@@ -254,14 +254,15 @@
         var photosLoaded = 0;
         var noMorePosts = false;
 
-        //Add Arrow Event Listener
+        //Add Event Listeners
         document.addEventListener("keydown", checkForRightOrLeftArrow);
         document.addEventListener('paste', pasteAndLoad());
 
         function pasteAndLoad() {
             return function(event) {
                 var pasteString = event.clipboardData.getData("text");
-
+                event.preventDefault();
+                
                 // Need to take more inputs, for now, just the tumblr name
                 tumblrInput.value = pasteString;
                 loadImages();
@@ -311,6 +312,7 @@
             // If they update the Tumblr or Tags, clear everything out
             if (tumblrName != tumblrInput.value || tagQuery != tagInput.value) {
                 clearEverything();
+                closeImage();
             }
 
             if(noMorePosts) {
