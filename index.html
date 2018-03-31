@@ -56,12 +56,29 @@
                 text-align: center;
                 padding: 1rem;
             }
+            .photo-wrapper {
+                display: inline-block;
+                position: relative;
+                margin: 1vh;
+            }
+
             .photo {
                 max-height: 30vh;
                 max-width: 80vw;
-                display: inline-block;
-                margin: 1vh;
-                border-radius: 2px;
+
+            }
+
+            .photoset-count {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background-color: white;
+                opacity: 0;
+                padding: 0.2rem 0.3rem;
+            }
+
+            .photo-wrapper:hover .photoset-count {
+                opacity: 0.8;
             }
 
             .hide {
@@ -411,6 +428,9 @@
                 var urls = posts[i].photos;
 
                 for(var j = 0; j < urls.length; j++) {
+                    var newWrapperElement = document.createElement('div');
+                    newWrapperElement.classList.add('photo-wrapper');
+
                     var newElement = document.createElement('img');
 
                     newElement.src = urls[j].original_size.url;
@@ -421,8 +441,16 @@
                     newElement.dataset.tags = posts[i].tags;
                     newElement.dataset.noteCount = posts[i].note_count;
                     newElement.classList.add('photo');
+                    if(urls.length > 1) {
+                        var photoSetCountElement = document.createElement('div')
+                        photoSetCountElement.classList.add('photoset-count');
+                        photoSetCountElement.innerText = j + 1;
+                        newWrapperElement.appendChild(photoSetCountElement);
+                    }
                     newElement.onclick = zoomImage();
-                    photosDiv.appendChild(newElement);
+                    newWrapperElement.appendChild(newElement);
+
+                    photosDiv.appendChild(newWrapperElement)
 
                     newElement.id = photosLoaded; 
                     photosLoaded++;
