@@ -62,6 +62,29 @@
                 margin: 1vh;
             }
 
+            .photo-wrapper.first,
+            .photo-wrapper.middle,
+            .photo-wrapper.last {
+                background-color: white;
+            }
+
+            .photo-wrapper.first {
+                margin-right: 0;
+                padding-right: 1vh;
+            }
+
+            .photo-wrapper.middle {
+                margin-right: 0;
+                margin-left: 0;
+                padding-right: 1vh;
+                padding-left: 1vh;
+            }
+
+            .photo-wrapper.last {
+                margin-left: 0;
+                padding-left: 1vh;
+            }
+
             .photo {
                 max-height: 30vh;
                 max-width: 80vw;
@@ -75,6 +98,10 @@
                 background-color: white;
                 opacity: 0;
                 padding: 0.2rem 0.3rem;
+            }
+
+            .photoset-count.not-first {
+                margin-left: 1vh;
             }
 
             .photo-wrapper:hover .photoset-count {
@@ -442,10 +469,25 @@
                     newElement.dataset.noteCount = posts[i].note_count;
                     newElement.classList.add('photo');
                     if(urls.length > 1) {
+                        // Add the count
                         var photoSetCountElement = document.createElement('div')
                         photoSetCountElement.classList.add('photoset-count');
                         photoSetCountElement.innerText = j + 1;
                         newWrapperElement.appendChild(photoSetCountElement);
+
+                        if(j > 0) {
+                            photoSetCountElement.classList.add('not-first');
+                        }
+
+                        // try and make it look pretty
+                        if(j === 0) {
+                            newWrapperElement.classList.add('first');
+                        } else if (j === urls.length - 1) {
+                            newWrapperElement.classList.add('last');
+                        } else {
+                            newWrapperElement.classList.add('middle');
+
+                        }
                     }
                     newElement.onclick = zoomImage();
                     newWrapperElement.appendChild(newElement);
