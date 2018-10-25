@@ -419,6 +419,7 @@
         }
 
         function handleSuccess(data) {
+            console.log(data);
             totalPosts = data.response.total_posts;
 
             if(data.response.posts.length > 0) {
@@ -452,50 +453,53 @@
 
         function addImages(posts) {
             for (var i = 0; i < posts.length; i++) {
-                var urls = posts[i].photos;
+                if(posts[i].type == "photo") {
+                    var urls = posts[i].photos;
 
-                for(var j = 0; j < urls.length; j++) {
-                    var newWrapperElement = document.createElement('div');
-                    newWrapperElement.classList.add('photo-wrapper');
 
-                    var newElement = document.createElement('img');
+                    for(var j = 0; j < urls.length; j++) {
+                        var newWrapperElement = document.createElement('div');
+                        newWrapperElement.classList.add('photo-wrapper');
 
-                    newElement.src = urls[j].original_size.url;
-                    newElement.dataset.url = posts[i].post_url;
-                    newElement.dataset.id = posts[i].id;
-                    newElement.dataset.caption = posts[i].caption;
-                    newElement.dataset.reblogKey = posts[i].reblog_key;
-                    newElement.dataset.tags = posts[i].tags;
-                    newElement.dataset.noteCount = posts[i].note_count;
-                    newElement.classList.add('photo');
-                    if(urls.length > 1) {
-                        // Add the count
-                        var photoSetCountElement = document.createElement('div')
-                        photoSetCountElement.classList.add('photoset-count');
-                        photoSetCountElement.innerText = j + 1;
-                        newWrapperElement.appendChild(photoSetCountElement);
+                        var newElement = document.createElement('img');
 
-                        if(j > 0) {
-                            photoSetCountElement.classList.add('not-first');
+                        newElement.src = urls[j].original_size.url;
+                        newElement.dataset.url = posts[i].post_url;
+                        newElement.dataset.id = posts[i].id;
+                        newElement.dataset.caption = posts[i].caption;
+                        newElement.dataset.reblogKey = posts[i].reblog_key;
+                        newElement.dataset.tags = posts[i].tags;
+                        newElement.dataset.noteCount = posts[i].note_count;
+                        newElement.classList.add('photo');
+                        if(urls.length > 1) {
+                            // Add the count
+                            var photoSetCountElement = document.createElement('div')
+                            photoSetCountElement.classList.add('photoset-count');
+                            photoSetCountElement.innerText = j + 1;
+                            newWrapperElement.appendChild(photoSetCountElement);
+
+                            if(j > 0) {
+                                photoSetCountElement.classList.add('not-first');
+                            }
+
+                            // try and make it look pretty
+                            if(j === 0) {
+                                newWrapperElement.classList.add('first');
+                            } else if (j === urls.length - 1) {
+                                newWrapperElement.classList.add('last');
+                            } else {
+                                newWrapperElement.classList.add('middle');
+
+                            }
                         }
+                        newElement.onclick = zoomImage();
+                        newWrapperElement.appendChild(newElement);
 
-                        // try and make it look pretty
-                        if(j === 0) {
-                            newWrapperElement.classList.add('first');
-                        } else if (j === urls.length - 1) {
-                            newWrapperElement.classList.add('last');
-                        } else {
-                            newWrapperElement.classList.add('middle');
+                        photosDiv.appendChild(newWrapperElement)
 
-                        }
+                        newElement.id = photosLoaded; 
+                        photosLoaded++;
                     }
-                    newElement.onclick = zoomImage();
-                    newWrapperElement.appendChild(newElement);
-
-                    photosDiv.appendChild(newWrapperElement)
-
-                    newElement.id = photosLoaded; 
-                    photosLoaded++;
                 }
             }
         }
