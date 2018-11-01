@@ -85,10 +85,19 @@
                 padding-left: 1vh;
             }
 
-            .photo {
+            .photo,
+            .tmblr-full img {
                 max-height: 30vh;
                 max-width: 80vw;
 
+            }
+
+            .photo-wrapper.text {
+                background-color: #dadada;
+            }
+            .tmblr-full {
+                display: inline-block;
+                margin: 1rem;
             }
 
             .photoset-count {
@@ -267,7 +276,7 @@
         // Strings for AJAX Request
         var ajaxPartOne = 'https://m3tcasc1v1.execute-api.us-west-2.amazonaws.com/tumble_api/'
         var ajaxPartTwo = '.tumblr.com/posts/'
-        var postType = 'photo';
+        var postType = ''//'photo';
         var tagKey = 'tag';
         var offsetKey = 'offset';
         var reblogPrefix = 'https://www.tumblr.com/reblog/'
@@ -501,7 +510,22 @@
                         photosLoaded++;
                     }
                 }
+                if(posts[i].type == 'text') {
+                    var newWrapperElement = htmlToElement('<div class="photo-wrapper text">' + posts[i].body + '</div>');
+
+                    photosDiv.appendChild(newWrapperElement)
+
+                    //newElement.id = photosLoaded; 
+                    //photosLoaded++;
+                }
             }
+        }
+
+        function htmlToElement(html) {
+            var template = document.createElement('template');
+            html = html.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            return template.content.firstChild;
         }
 
         function zoomImage() {
@@ -529,6 +553,7 @@
 
         function updateTags(tags) {
             if(!tags) {
+                tagsElement.empty();
                 return;
             }
 
