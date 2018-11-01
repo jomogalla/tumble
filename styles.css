@@ -1,0 +1,229 @@
+body {
+    background-color: lightgray;
+    margin: 0;
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+}
+
+.input-group {
+    display: inline;
+}
+
+input {
+    font-family: inherit;
+    border: none;
+    min-width: 30vw;
+    font-size: inherit;
+    outline: none;
+}
+label {
+    color: #b0b0ca;
+}
+
+button {
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    outline: none;
+}
+
+button:hover {
+    font-style: italic;
+}
+
+#go-button {
+    float: right;
+}
+
+.top {
+    background-color: white;
+    padding: 1rem;
+}
+
+.top form {
+    margin: 0;
+}
+
+#photos {
+    text-align: center;
+    padding: 1rem;
+}
+.photo-wrapper {
+    display: inline-block;
+    position: relative;
+    margin: 1vh;
+}
+
+.photo-wrapper.first,
+.photo-wrapper.middle,
+.photo-wrapper.last {
+    background-color: white;
+}
+
+.photo-wrapper.first {
+    margin-right: 0;
+    padding-right: 1vh;
+}
+
+.photo-wrapper.middle {
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 1vh;
+    padding-left: 1vh;
+}
+
+.photo-wrapper.last {
+    margin-left: 0;
+    padding-left: 1vh;
+}
+
+.photo,
+.tmblr-full img {
+    max-height: 30vh;
+    max-width: 80vw;
+}
+
+.photo-wrapper.text {
+    background-color: #dadada;
+}
+.tmblr-full {
+    display: inline-block;
+    margin: 1rem;
+}
+
+.photoset-count {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    opacity: 0;
+    padding: 0.2rem 0.3rem;
+}
+
+.photoset-count.not-first {
+    margin-left: 1vh;
+}
+
+.photo-wrapper:hover .photoset-count {
+    opacity: 0.8;
+}
+
+.hide {
+    display: none;
+}
+
+#image-viewer {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffffffdb;
+    z-index: -100;
+}
+
+#image {
+    height: 100vh;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#load-more-button {
+    padding: 0.5rem 1rem;
+}
+
+.post-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0.5rem 1rem;
+}
+
+.post-info a {
+    display: block;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.post-info a:hover {
+    font-style: italic;
+}
+
+#post-count {
+    padding: 0.5rem 1rem;
+}
+
+#tags {
+    font-size: small;
+    max-width: 7rem;
+}
+
+#tags a {
+    margin-bottom: 0.3rem;
+    line-height: 1;
+}
+
+#tags a:last-child {
+    /* margin-bottom: 1rem; */
+}
+
+.light-gray {
+    color: #aaaaaa;
+}
+
+.white-background {
+    background-color: #ffffffdb;
+}
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+    #image {
+        height: auto;
+        width: 100%;
+        top: 50%;
+        left: auto;
+        transform: translateY(-50%);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .input-group {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    #go-button {
+        float: none;
+    }
+
+    .photo {
+        height: auto;
+        /* width: 90vw;
+        width: 100%; */
+        margin: 0;
+        margin-bottom: 1rem;
+    }
+
+    #bottom button {
+        width: 100%;
+        background-color: white;
+    }
+}
