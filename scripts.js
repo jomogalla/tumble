@@ -155,7 +155,7 @@ function generateRequestString(tumblrName, currentOffset, tag) {
 function handleSuccess(data) {
     console.log(data);
     totalPosts = data.response.total_posts;
-
+    console.log(data.response)
     if(data.response.posts.length > 0) {
         postOffset += data.response.posts.length;
         
@@ -189,7 +189,9 @@ function addImages(posts) {
     for (var i = 0; i < posts.length; i++) {
         if(posts[i].type == "photo") {
             var urls = posts[i].photos;
-
+            var newPostWrapper = document.createElement('div');
+            newPostWrapper.classList.add('post-wrapper');
+            newPostWrapper.classList.add('text');
 
             for(var j = 0; j < urls.length; j++) {
                 var newWrapperElement = document.createElement('div');
@@ -205,45 +207,63 @@ function addImages(posts) {
                 newElement.dataset.tags = posts[i].tags;
                 newElement.dataset.noteCount = posts[i].note_count;
                 newElement.classList.add('photo');
-                if(urls.length > 1) {
-                    // Add the count
-                    var photoSetCountElement = document.createElement('div')
-                    photoSetCountElement.classList.add('photoset-count');
-                    photoSetCountElement.innerText = j + 1;
-                    newWrapperElement.appendChild(photoSetCountElement);
 
-                    if(j > 0) {
-                        photoSetCountElement.classList.add('not-first');
-                    }
-
-                    // try and make it look pretty
-                    if(j === 0) {
-                        newWrapperElement.classList.add('first');
-                    } else if (j === urls.length - 1) {
-                        newWrapperElement.classList.add('last');
-                    } else {
-                        newWrapperElement.classList.add('middle');
-
-                    }
-                }
                 newElement.onclick = zoomImage();
                 newWrapperElement.appendChild(newElement);
 
-                photosDiv.appendChild(newWrapperElement)
+                newPostWrapper.appendChild(newWrapperElement)
 
                 newElement.id = photosLoaded; 
                 photosLoaded++;
             }
+
+            // Add caption
+            var caption = htmlToElement(posts[i].caption)
+            if(caption) {
+                newPostWrapper.appendChild(htmlToElement(posts[i].caption));
+            }
+            
+
+            photosDiv.appendChild(newPostWrapper);
         }
         if(posts[i].type == 'text') {
-            var newWrapperElement = htmlToElement('<div class="photo-wrapper text">' + posts[i].body + '</div>');
+            console.log(posts[i].body)
+            var htmlElement = htmlToElement('<div class="post-wrapper text">' + posts[i].body + '</div>');
 
-            photosDiv.appendChild(newWrapperElement)
+            htmlElement.childNodes.forEach(function (element) {
+                // If we dont have an img, find one...
+                var newElement;
 
-            //newElement.id = photosLoaded; 
-            //photosLoaded++;
+                console.log(element.tagName)
+                if(element.tagName != "IMG") {
+                    newElement = element.getElementsByTagName('img')[0];
+                } else {
+                    newElement = element;
+                }
+
+                if(newElement) {
+                    newElement.dataset.url = posts[i].post_url;
+                    newElement.dataset.id = posts[i].id;
+                    newElement.dataset.caption = posts[i].caption;
+                    newElement.dataset.reblogKey = posts[i].reblog_key;
+                    newElement.dataset.tags = posts[i].tags;
+                    newElement.dataset.noteCount = posts[i].note_count;
+                    newElement.classList.add('photo');
+    
+                    newElement.onclick = zoomImage();
+    
+                    newElement.id = photosLoaded; 
+                    photosLoaded++;
+                }
+            });
+
+            photosDiv.appendChild(htmlElement);
         }
     }
+}
+
+function makeImageClickable() {
+
 }
 
 function htmlToElement(html) {

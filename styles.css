@@ -84,12 +84,22 @@ button:hover {
     max-width: 80vw;
 }
 
-.photo-wrapper.text {
-    background-color: #dadada;
-}
 .tmblr-full {
     display: inline-block;
-    margin: 1rem;
+    margin: 0.2rem;
+}
+
+.post-wrapper {
+    background-color: #dadada;
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 1rem;
+}
+
+.post-wrapper p {
+    max-width: 30rem;
+    margin: 0 auto;
+    font-size: small;
 }
 
 .photoset-count {
